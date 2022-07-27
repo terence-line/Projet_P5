@@ -73,7 +73,7 @@ fetch(`http://localhost:3000/api/products/${id}`)
         productImg.setAttribute("src", result.imageUrl);
         productImg.setAttribute("alt", result.altTxt);
         elementImage.appendChild(productImg);
-        document.querySelector('.item_img').setAttribute("src", result.imageUrl);
+        // document.querySelector('.item_img').setAttribute("src", result.imageUrl);
         console.log(productImg);
 
         // insertion nom
