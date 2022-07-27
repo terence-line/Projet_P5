@@ -72,7 +72,7 @@ fetch(`http://localhost:3000/api/products/${id}`)
         const productImg = document.createElement("img");
         productImg.setAttribute("src", result.imageUrl);
         productImg.setAttribute("alt", result.altTxt);
-        elementImg.appendChild(productImg);
+        elementImage.appendChild(productImg);
         document.querySelector('.item_img').setAttribute("src", result.imageUrl);
         console.log(productImg);
 
