@@ -16,10 +16,10 @@ fetch('http://localhost:3000/api/products')
               <h3>${result[i]?.name}</h3>
               <p>${result[i]?.description}</p>
             </article>
-          </a>
-        
-         `;
+          </a>`;
         }
+
+        console.log(result);
 
         document.querySelector("#items").innerHTML = html;
 
