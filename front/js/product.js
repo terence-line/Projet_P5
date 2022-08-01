@@ -60,6 +60,9 @@ function afficher_produit() {
     })
 }
 
+
+// Local storage
+
 function ajouter_panier(un_produit) {
     const local = JSON.parse(localStorage.getItem("product"));
     const myColor = document.querySelector("#colors").value;
