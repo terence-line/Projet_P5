@@ -1,57 +1,47 @@
-// console.log(window.location.search);
-console.log(window.location);
-
-
-// création nouvel url avec urlSearchParams
-// let params = new URLSearchParams(document.location.search);
-// let id = params.get('id');
-let str = window.location.href;
-let url = new URL(str);
-let params = new URLSearchParams(document.location.href)
-let id = url.searchParams.get("id");
-console.log('id');
-
+let id = new URL(document.location.href).searchParams.get("id")
+prixProduits = [];
 
 // Creation des variables. Elle sont déclarées en dehors pour pouvoir les appelées plus tard si besoin.
 
-let elementImage = document.querySelector(".item__img");
+// let elementImage = document.querySelector(".item__img");
 let elementName = document.querySelector("#title");
 let elementPrice = document.querySelector("#price");
 let elementDescription = document.querySelector("#description");
 let elementColors = document.querySelector("#colors");
 
+afficher_produit();
 
 // création nouvelle adresse fetch + identifiant produit
-
-fetch(`http://localhost:3000/api/products/${id}`)
-
-    .then(function (response) {
-        console.log(response);
+function afficher_produit() {
+    fetch('http://localhost:3000/api/products/'+id)
+    .then((response) => {    
         // Utilisation d'une condition pour l'affichage de la reponse dans la console.
         if (response.ok) {
             return response.json();
         }
     })
-
-    .then (function (result) {
+    .then ((result) => {
         // Affichage du produit dans la console.
-        console.log(result);
+        console.log('Afficher la réponse du serveur');
+        console.table(result);
+
+        let elementImage = document.querySelector(".item__img");
 
         // insertion image
         const productImg = document.createElement("img");
         productImg.setAttribute("src", result.imageUrl);
         productImg.setAttribute("alt", result.altTxt);
         elementImage.appendChild(productImg);
-        
+            
         // insertion nom
         elementName.innerHTML = result.name;
 
         // insertion prix            
         elementPrice.innerHTML = result.price;
-        
+            
         // insertion decxription           
         elementDescription.innerHTML = result.description;
-    
+        
         // insertion couleurs
         let productColors = result.colors;
         let monHtml = "";
@@ -59,15 +49,59 @@ fetch(`http://localhost:3000/api/products/${id}`)
             console.log(productColors[i]);
             monHtml += '<option value = "' + productColors[i]+ '">' + productColors[i]+"</option>";
         }
-            console.log(monHtml);
-            document.querySelector("select").innerHTML += monHtml;
-                    
+
+        console.log(monHtml);
+        document.querySelector("select").innerHTML += monHtml;    
         
-        });
+        ajouter_panier(result);
+    })
+    .catch ((err) => {
+        console.log(err);
+    })
+}
+
+function ajouter_panier(un_produit) {
+    const local = JSON.parse(localStorage.getItem("product"));
+    const myColor = document.querySelector("#colors").value;
+    const myQte = document.querySelector("#quantity");
+
+    const opt = {
+        idProduit: id,
+        couleur: myColor,
+        qte: parseInt(myQte.value),
+        nom: un_produit.name,
+        descr: un_produit.description,
+        image: un_produit.imageUrl,
+        altimage: un_produit.altTxt
+    }
+
+    addToCart.onclick = () => {
+        /* Tableau des prix : (ne jamais stocker les prix dans le localStorage) */
+        const product = {
+            id: id,
+            colors: myColor,
+            quantity: myQte.value
+        }
+
+        /* Ajouter un produit au localStorage */
+        localStorage.setItem("product", JSON.stringify(opt));
+        console.table(localStorage['product'])
+
+        /* Alimenter le tableau des prix */
+        prixProduits.push(product);
+        console.table(prixProduits);
+    }
+}
 
     
+    
 
-        // création nouvelle adresse fetch + identifiant produit
+
+       
+
+
+
+// création nouvelle adresse fetch + identifiant produit
 
 /*fetch(`http://localhost:3000/api/products/${id}`)
     .then((response) => {
