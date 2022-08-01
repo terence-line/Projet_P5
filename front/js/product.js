@@ -61,7 +61,12 @@ function afficher_produit() {
 }
 
 
-// Local storage
+// .......  Local storage .............
+
+// localStorage.getItem("clé") => La fonction récupère la valeur d'une clé.
+// localStorage.setItem("clé", "valeur") => La fonction enregistre une valeur dans le storage.
+// JSON.parse() => La méthode JSON.parse() analyse une chaîne de caractères JSON et construit la valeur JavaScript ou l'objet décrit par cette chaîne.
+// parseInt() => La fonction parseInt() analyse une chaîne de caractère fournie en argument et renvoie un entier exprimé dans une base donnée.
 
 function ajouter_panier(un_produit) {
     const local = JSON.parse(localStorage.getItem("product"));
@@ -78,19 +83,21 @@ function ajouter_panier(un_produit) {
         altimage: un_produit.altTxt
     }
 
-    addToCart.onclick = () => {
-        /* Tableau des prix : (ne jamais stocker les prix dans le localStorage) */
+    // Création  d'un tableau de données (product)
+     addToCart.onclick = () => {
+
         const product = {
             id: id,
             colors: myColor,
             quantity: myQte.value
         }
 
-        /* Ajouter un produit au localStorage */
+        // Ajouter un produit au localStorage 
         localStorage.setItem("product", JSON.stringify(opt));
         console.table(localStorage['product'])
 
-        /* Alimenter le tableau des prix */
+        //Alimenter le tableau des prix 
+        // Tableau des prix : (ne jamais stocker les prix dans le localStorage) 
         prixProduits.push(product);
         console.table(prixProduits);
     }
