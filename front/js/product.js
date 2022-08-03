@@ -22,7 +22,6 @@ function afficher_produit() {
     })
     .then ((result) => {
         // Affichage du produit dans la console.
-        console.log('Afficher la réponse du serveur');
         console.table(result);
 
         let elementImage = document.querySelector(".item__img");
@@ -46,15 +45,14 @@ function afficher_produit() {
         let productColors = result.colors;
         let monHtml = "";
         for (let i= 0; i < productColors.length; i++) {
-            console.log(productColors[i]);
             monHtml += '<option value = "' + productColors[i]+ '">' + productColors[i]+"</option>";
         }
 
-        console.log(monHtml);
         document.querySelector("select").innerHTML += monHtml;    
         
         ajouter_panier(result);
     })
+
     .catch ((err) => {
         console.log(err);
     })
@@ -86,21 +84,25 @@ function ajouter_panier(un_produit) {
     // Création  d'un tableau de données (product)
      addToCart.onclick = () => {
 
+        const myColor = document.querySelector("#colors");
+
         const product = {
             id: id,
-            colors: myColor,
+            color: myColor.value,
             quantity: myQte.value
         }
+        console.log(product);
 
         // Ajouter un produit au localStorage 
-        localStorage.setItem("product", JSON.stringify(opt));
-        console.table(localStorage['product'])
+        localStorage.setItem("product", JSON.stringify(product));
+         
 
         //Alimenter le tableau des prix 
         // Tableau des prix : (ne jamais stocker les prix dans le localStorage) 
         prixProduits.push(product);
-        console.table(prixProduits);
+   
     }
+
 }
 
     
@@ -109,45 +111,5 @@ function ajouter_panier(un_produit) {
 
        
 
-
-
-// création nouvelle adresse fetch + identifiant produit
-
-/*fetch(`http://localhost:3000/api/products/${id}`)
-    .then((response) => {
-        return response.json();   
-        console.log(response);
-    })
-    .then((result) => {
-
-        // insertion image
-        const productImg = document.createElement("img");
-
-        productImg.setAttribute("src", result.imageUrl);
-
-        productImg.setAttribute("alt", result.altTxt);
-
-        document.querySelector(".item__img").setAttribute("src", result.imageUrl);
-
-        // insertion nom
-        elementName.innerHTML = result.name;
-
-        // insertion prix            
-        elementPrice.innerHTML = result.price;
-        
-        // insertion decxription           
-        elementDescription.innerHTML = result.description;
-    
-        // insertion couleurs
-        let productColors = result.colors;
-        let monHtml = "";
-        for (let i=0; i<productColors.length; i++) {
-            console.log(productColors[i]);
-            monHtml += '<option value = "' + productColors[i]+ '">' + productColors[i]+"</option>";
-        }
-            console.log(monHtml);
-            document.querySelector("select").innerHTML += monHtml;
-                       
-    });*/
 
 
