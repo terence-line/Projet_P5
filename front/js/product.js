@@ -49,7 +49,7 @@ function afficher_produit() {
 
             document.querySelector("select").innerHTML += monHtml;
 
-            ajouter_panier(resultApi);
+            ajouter_panier();
 
         })
 
@@ -66,33 +66,71 @@ function afficher_produit() {
 // parseInt() => La fonction parseInt() analyse une chaîne de caractère fournie en argument et renvoie un entier exprimé dans une base donnée.
 
 function ajouter_panier() {
-    const tableauLocalStorage = JSON.parse(localStorage.getItem("productId"));
-    const myColor = document.querySelector("#colors").value;
-    const myQuantity = document.querySelector("#quantity");
-
-
 
     // Création  d'un tableau de données (product)
     addToCart.onclick = () => {
+
+        const tableauLocalStorage = JSON.parse(localStorage.getItem("products"));
+
+        const myColorValue = document.querySelector("#colors").value;
+
+        const myQuantityValue = document.querySelector("#quantity").value;
+
+        let product = {
+            id: myId,
+            color: myColorValue,
+            quantity: myQuantityValue,
+        }
        
-        if(myQuantity.value == 0 || myColor != "") {
-            alert("Veuillez sélectionner une couleur et une quantité.")  
+        if(Number(myQuantityValue) <= 0 || myColorValue === "") {
+
+            return alert("Veuillez sélectionner une couleur et une quantité.");
         }
-        else {
 
-            let myColor = document.querySelector("#colors");
+        if(tableauLocalStorage === null){
 
-            let product = {
-                id: myId,
-                color: myColor.value,
-                quantity: myQuantity.value,
-                quantity: parseInt(myQuantity.value)
-            }
-            console.log(product);
+              const kanapsInfos = [];
+              
+              kanapsInfos.push(product);
+
+              return localStorage.setItem("products", JSON.stringify(kanapsInfos));
+
+        }
+
+        /* La methode array.some() renvoit un booleen true/false, si l'assertion entree est vrai ou fausse,
+          
+           on va voir si le produit choisi par l'utilisateur est deja dans le localStorage ou pas.
         
-            // Ajouter un produit au localStorage 
-            localStorage.setItem("productId", JSON.stringify(product))
+        */
+
+        const isInsideLocalStorage = tableauLocalStorage.some((kanap)=>{
+
+             return kanap.id === myId && kanap.color === myColorValue;
+
+        });
+
+        if(isInsideLocalStorage === false){
+
+             tableauLocalStorage.push(product);
+
+             return localStorage.setItem("products", JSON.stringify(tableauLocalStorage));
+
         }
+
+        const updateTableauLocalStorage = tableauLocalStorage.map((kanap)=>{
+
+                    if(kanap.color === myColorValue){
+
+                        kanap.quantity = Number(kanap.quantity) + Number(myQuantityValue);
+
+                    }
+
+                    return kanap;
+        });
+
+
+        return localStorage.setItem("products", JSON.stringify(updateTableauLocalStorage));
+
     }
 }
 
