@@ -66,11 +66,7 @@ function afficher_produit() {
 // parseInt() => La fonction parseInt() analyse une chaîne de caractère fournie en argument et renvoie un entier exprimé dans une base donnée.
 
 function ajouter_panier() {
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> bfb1935a94aafede1925847605c2f7da864ca258
     // Création  d'un tableau de données (product)
     addToCart.onclick = () => {
 
@@ -84,7 +80,7 @@ function ajouter_panier() {
             id: myId,
             color: myColorValue,
             quantity: myQuantityValue,
-<<<<<<< HEAD
+
         }
 
         if (Number(myQuantityValue) <= 0 || myColorValue === "") {
@@ -99,28 +95,10 @@ function ajouter_panier() {
             kanapsInfos.push(product);
 
             return localStorage.setItem("products", JSON.stringify(kanapsInfos));
-=======
+
         }
        
-        if(Number(myQuantityValue) <= 0 || myColorValue === "") {
-
-            return alert("Veuillez sélectionner une couleur et une quantité.");
-        }
-
-        if(tableauLocalStorage === null){
-
-              const kanapsInfos = [];
-              
-              kanapsInfos.push(product);
-
-              return localStorage.setItem("products", JSON.stringify(kanapsInfos));
->>>>>>> bfb1935a94aafede1925847605c2f7da864ca258
-
-        }
-
         /* La methode array.some() renvoit un booleen true/false, si l'assertion entree est vrai ou fausse,
-          
-<<<<<<< HEAD
            on va voir si le produit choisi par l'utilisateur est deja dans le localStorage ou pas.*/
         
 
@@ -147,42 +125,13 @@ function ajouter_panier() {
             }
 
             return kanap;
-=======
-           on va voir si le produit choisi par l'utilisateur est deja dans le localStorage ou pas.
-        
-        */
-
-        const isInsideLocalStorage = tableauLocalStorage.some((kanap)=>{
-
-             return kanap.id === myId && kanap.color === myColorValue;
-
+   
         });
-
-        if(isInsideLocalStorage === false){
-
-             tableauLocalStorage.push(product);
-
-             return localStorage.setItem("products", JSON.stringify(tableauLocalStorage));
-
-        }
-
-        const updateTableauLocalStorage = tableauLocalStorage.map((kanap)=>{
-
-                    if(kanap.color === myColorValue){
-
-                        kanap.quantity = Number(kanap.quantity) + Number(myQuantityValue);
-
-                    }
-
-                    return kanap;
->>>>>>> bfb1935a94aafede1925847605c2f7da864ca258
-        });
-
 
         return localStorage.setItem("products", JSON.stringify(updateTableauLocalStorage));
-
     }
 }
+    
        
        
         
