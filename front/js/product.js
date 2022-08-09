@@ -75,19 +75,8 @@ function ajouter_panier() {
     // Création  d'un tableau de données (product)
     addToCart.onclick = () => {
        
-        /*let myColor = document.querySelector("#colors");
-
-        let product = {
-            id: myId,
-            color: myColor.value,
-            quantity: myQuantity.value,
-            quantity: parseInt(myQuantity.value)
-        }
-        console.log(product);*/
-
         if(myQuantity.value == 0 || myColor != "") {
-            alert("Veuillez sélectionner une couleur et une quantité.")
-            
+            alert("Veuillez sélectionner une couleur et une quantité.")  
         }
         else {
 
