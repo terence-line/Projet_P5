@@ -1,9 +1,12 @@
 // Importation du local storage de la page produit
 const tableauLocalStorage = JSON.parse(localStorage.getItem("products"));
-console.log(tableauLocalStorage);
-let myId = new URL(document.location.href).searchParams.get("id")
-prixProduits = [];
+console.table(tableauLocalStorage);
 
+
+
+//let myId = new URL(document.location.href).searchParams.get("id")
+prixProduits = [];
+let panierPlein = [];
 
 
 
@@ -13,15 +16,15 @@ console.log(kanapPanier);
 
 // Vérification du contenu du panier : si le panier est vide
 if (tableauLocalStorage === null){
-    alert("panier vide");
+    alert("Votre panier est vide");
 }
 // Si le panier est plein, afficher les produits
 else {
-    let panierPlein = [];
     
-    for(i=0; i < tableauLocalStorage.length; i++) {
-        //console.log(tableauLocalStorage.length);
-        panierPlein = panierPlein + 
+    
+    for(let i=0; i < tableauLocalStorage.length; i++) {
+
+        panierPlein = panierPlein += 
 
         `<article class="cart__item" data-id="{product-ID}" data-color="{product-color}">
             <div class="cart__item__img">
@@ -35,7 +38,7 @@ else {
                 </div>
                 <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
-                        <p>Qté : ${tableauLocalStorage[i].quantity}</p>
+                        <p>Qté : </p>
                         <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value=" ${tableauLocalStorage[i].quantity}">
                     </div>
                     <div class="cart__item__content__settings__delete">
@@ -48,11 +51,11 @@ else {
 
     kanapPanier.innerHTML = panierPlein;
    
-
+    
 
     // Alimenter le tableau des prix
     prixProduits.push("products");
-    console.log(prixProduits);
+    //console.log(prixProduits);
 
 }
      
